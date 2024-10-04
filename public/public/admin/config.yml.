@@ -1,16 +1,14 @@
-backend:
-  name: git-gateway
-  branch: main  # ou 'master' selon le nom de ta branche principale
+// stackbit.config.js
+import { ContentfulContentSource } from "@stackbit/cms-contentful";
 
-media_folder: "public/images/uploads"  # Où seront stockés les fichiers uploadés
-public_folder: "/images/uploads"
-
-collections:
-  - name: "pages"  # Nom de la collection
-    label: "Pages"
-    folder: "src/pages"  # Dossier où se trouvent tes pages
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Body", name: "body", widget: "markdown" }
+export default {
+  contentSources: [
+    new ContentfulContentSource({
+      spaceId: process.env.CONTENTFUL_SPACE_ID,
+      environment: process.env.CONTENTFUL_ENVIRONMENT,
+      previewToken: process.env.CONTENTFUL_PREVIEW_TOKEN,
+      accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN
+    })
+  ]
+  // ...
+};
